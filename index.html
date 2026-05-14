@@ -3,37 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LUKA-AI | ULTRA DEPLOY</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>LUKA-AI | DEPLOY SITE</title>
 
   <style>
     body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background: radial-gradient(circle at top, #3b0764, #0a0a12);
+      color: white;
       overflow: hidden;
     }
 
-    /* floating glow circles */
-    .blob {
+    /* glowing background */
+    .glow {
       position: absolute;
-      width: 300px;
-      height: 300px;
-      background: rgba(168,85,247,0.25);
+      width: 400px;
+      height: 400px;
+      background: rgba(168,85,247,0.3);
+      filter: blur(120px);
       border-radius: 50%;
-      filter: blur(80px);
-      animation: float 8s infinite ease-in-out;
-    }
-
-    .blob2 {
-      background: rgba(99,102,241,0.25);
-      top: 60%;
-      left: 60%;
-      animation-delay: 2s;
-    }
-
-    .blob1 {
       top: 10%;
       left: 10%;
+      animation: float 6s infinite ease-in-out;
+    }
+
+    .glow2 {
+      top: 60%;
+      left: 60%;
+      background: rgba(99,102,241,0.3);
     }
 
     @keyframes float {
@@ -41,106 +42,108 @@
       50% { transform: translateY(40px); }
     }
 
-    .glass {
+    /* card */
+    .card {
+      position: relative;
+      z-index: 10;
+      width: 360px;
+      padding: 30px;
+      border-radius: 20px;
       background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 25px rgba(168,85,247,0.4);
+      text-align: center;
     }
 
-    .glow {
-      box-shadow: 0 0 25px rgba(168,85,247,0.6);
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      color: #bb00ff;
     }
 
-    .neon {
-      text-shadow: 0 0 12px rgba(168,85,247,0.9);
+    p {
+      font-size: 12px;
+      color: #c9b3e6;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #bb00ff, #6a00ff);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    a {
+      display: block;
+      margin-top: 15px;
+      color: #c9b3e6;
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 10px;
+      opacity: 0.6;
     }
   </style>
 </head>
 
-<body class="flex items-center justify-center min-h-screen p-4 text-white">
+<body>
 
-  <!-- background blobs -->
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
+  <div class="glow"></div>
+  <div class="glow glow2"></div>
 
-  <!-- CARD -->
-  <div class="glass glow rounded-3xl p-6 w-full max-w-md text-center relative z-10">
+  <div class="card">
 
-    <!-- header -->
-    <div class="flex justify-between items-center mb-5">
-      <h1 class="font-bold text-lg neon">LUKA-AI</h1>
+    <h1>LUKA-AI</h1>
+    <p>Deploy • Automate • Heroku System</p>
 
-      <button onclick="toggleDark()"
-        class="text-xs px-3 py-1 rounded-full bg-purple-600 hover:bg-purple-500 transition">
-        🌙 Mode
-      </button>
-    </div>
+    <input id="github" type="text" placeholder="Enter GitHub username">
 
-    <!-- logo -->
-    <div class="flex justify-center mb-4">
-      <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center font-black text-2xl glow animate-pulse">
-        L
-      </div>
-    </div>
+    <button onclick="deploy()">🚀 Deploy Now</button>
 
-    <p class="text-purple-200 text-xs mb-6">
-      ⚡ Verify • Deploy • Automate Heroku
-    </p>
-
-    <!-- input -->
-    <div class="text-left">
-      <label class="text-xs text-purple-300">GitHub Username</label>
-
-      <input
-        id="github-username"
-        type="text"
-        placeholder="e.g. lucvoice"
-        class="w-full mt-2 px-4 py-3 rounded-xl bg-white/10 border border-white/10 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
-      />
-
-      <p class="text-[11px] text-purple-300 mt-2">
-        🌿 Fork required: <span class="text-purple-200 font-mono">LUKA-AI</span>
-      </p>
-    </div>
-
-    <!-- button -->
-    <button
-      onclick="handleDeploy()"
-      class="mt-6 w-full py-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-500 font-bold hover:scale-105 transition glow"
-    >
-      🚀 DEPLOY NOW
-    </button>
-
-    <!-- link -->
-    <a
-      href="https://github.com/lucvoice/LUKA-AI"
-      target="_blank"
-      class="mt-4 block text-xs text-purple-200 hover:text-white transition"
-    >
-      Open GitHub Repository →
+    <a href="https://github.com/lucvoice/LUKA-AI" target="_blank">
+      View GitHub Repository
     </a>
 
-    <p class="text-[10px] text-purple-400 mt-6">
-      🔐 Secure • Fast • AI Ready
-    </p>
+    <div class="footer">
+      © 2026 LUKA-AI SYSTEM
+    </div>
 
   </div>
 
   <script>
-    function handleDeploy() {
-      const username = document.getElementById("github-username").value.trim();
+    function deploy() {
+      const user = document.getElementById("github").value.trim();
 
-      if (!username) {
-        alert("Weka GitHub username kwanza!");
+      if (!user) {
+        alert("Please enter GitHub username");
         return;
       }
 
-      const url = `https://heroku.com/deploy?template=https://github.com/${username}/LUKA-AI`;
-      window.open(url, "_blank");
-    }
+      const url = `https://heroku.com/deploy?template=https://github.com/${user}/LUKA-AI`;
 
-    function toggleDark() {
-      alert("Hii design tayari ni cyber-purple dark mode 😎");
+      window.open(url, "_blank");
     }
   </script>
 
