@@ -5,114 +5,123 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LUKA-AI | CYBER DEPLOY</title>
 
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #0b0014, #1a0033, #05010a);
-      color: white;
+      background: radial-gradient(circle at top, #2e1065, #05010a);
     }
 
-    .card {
-      width: 340px;
-      padding: 25px;
-      border-radius: 15px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(187,0,255,0.3);
-      box-shadow: 0 0 20px rgba(187,0,255,0.25);
-      text-align: center;
+    .glass {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(168,85,247,0.25);
     }
 
-    h1 {
-      margin: 0;
-      font-size: 26px;
-      color: #bb00ff;
-      letter-spacing: 2px;
+    .glow {
+      box-shadow: 0 0 25px rgba(168,85,247,0.35);
     }
 
-    p {
-      font-size: 12px;
-      color: #c9b3e6;
+    .neon-text {
+      text-shadow: 0 0 12px rgba(168,85,247,0.8);
     }
 
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      background: rgba(0,0,0,0.4);
-      color: white;
-    }
-
-    button {
-      width: 100%;
-      margin-top: 15px;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      background: linear-gradient(90deg, #bb00ff, #6a00ff);
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-
-    a {
-      display: block;
-      margin-top: 15px;
-      font-size: 12px;
-      color: #c9b3e6;
-      text-decoration: none;
-    }
-
-    .status {
-      margin-top: 15px;
-      font-size: 10px;
-      opacity: 0.7;
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(168,85,247,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168,85,247,0.08) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 0;
+      opacity: 0.4;
     }
   </style>
 </head>
 
-<body>
+<body class="flex items-center justify-center min-h-screen p-4 text-white relative">
 
-  <div class="card">
+  <!-- GRID BACKGROUND -->
+  <div class="grid-bg"></div>
 
-    <h1>LUKA-AI</h1>
-    <p>Cyber Deploy System</p>
+  <!-- CARD -->
+  <div class="glass glow relative z-10 rounded-3xl p-6 w-full max-w-md text-center">
 
-    <input id="github" type="text" placeholder="Enter GitHub username">
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-5">
+      <h1 class="font-bold text-lg neon-text">LUKA-AI</h1>
 
-    <button onclick="deploy()">🚀 Deploy</button>
+      <button onclick="toggleDarkMode()"
+        class="text-xs px-3 py-1 rounded-full bg-purple-600 hover:bg-purple-500 transition">
+        🎨 Mode
+      </button>
+    </div>
 
-    <a href="https://github.com/lucvoice/LUKA-AI" target="_blank">
-      Open Repository
+    <!-- LOGO -->
+    <div class="flex justify-center mb-4">
+      <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-purple-700 to-indigo-500 flex items-center justify-center font-black text-2xl glow">
+        L
+      </div>
+    </div>
+
+    <h2 class="text-xl font-bold neon-text">LUKA-AI DEPLOYER</h2>
+    <p class="text-xs text-purple-200 mt-1">✓ verify · deploy · heroku system</p>
+
+    <!-- INPUT -->
+    <div class="text-left mt-6">
+      <label class="text-xs text-purple-300">GitHub Username</label>
+
+      <input
+        type="text"
+        id="github-username"
+        placeholder="e.g. octocat"
+        class="w-full mt-2 px-4 py-3 rounded-xl bg-white/10 border border-white/10 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+      />
+
+      <p class="text-xs text-purple-300 mt-2">
+        🌿 Must fork <span class="text-purple-200 font-mono">lucvoice/LUKA-AI</span>
+      </p>
+    </div>
+
+    <!-- BUTTON -->
+    <button
+      onclick="handleDeploy()"
+      class="w-full mt-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-500 font-bold hover:scale-105 transition glow"
+    >
+      🚀 VERIFY & DEPLOY
+    </button>
+
+    <!-- LINK -->
+    <a
+      href="https://github.com/lucvoice/LUKA-AI"
+      target="_blank"
+      class="block mt-4 text-xs text-purple-200 hover:text-white transition"
+    >
+      Open GitHub Repository →
     </a>
 
-    <div class="status">SYSTEM ONLINE • READY</div>
+    <!-- FOOTER -->
+    <p class="text-[10px] text-purple-300 mt-6 border-t border-white/10 pt-3">
+      🛡️ CYBER SYSTEM ACTIVE • LUKA-AI
+    </p>
 
   </div>
 
   <script>
-    function deploy() {
-      const user = document.getElementById("github").value.trim();
+    function handleDeploy() {
+      const username = document.getElementById("github-username").value.trim();
 
-      if (!user) {
-        alert("Please enter GitHub username");
+      if (!username) {
+        alert("Please enter your GitHub username!");
         return;
       }
 
-      const url = `https://heroku.com/deploy?template=https://github.com/${user}/LUKA-AI`;
-
+      const url = `https://heroku.com/deploy?template=https://github.com/${username}/LUKA-AI`;
       window.open(url, "_blank");
+    }
+
+    function toggleDarkMode() {
+      alert("Cyber mode tayari iko active 😎");
     }
   </script>
 
