@@ -1,402 +1,284 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LUKA-AI • GLASS DEPLOY</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      transition:0.3s;
-      font-family:sans-serif;
-    }
-
-    body{
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding:20px;
-      overflow:hidden;
-
-      background:
-      linear-gradient(135deg,#8b5cf6,#3b82f6);
-    }
-
-    body.dark{
-      background:
-      linear-gradient(135deg,#020617,#111827,#312e81);
-    }
-
-    /* blur circles */
-
-    .blur1{
-      position:absolute;
-      width:250px;
-      height:250px;
-      background:#a855f7;
-      border-radius:50%;
-      top:-60px;
-      left:-60px;
-      filter:blur(80px);
-      opacity:0.6;
-    }
-
-    .blur2{
-      position:absolute;
-      width:250px;
-      height:250px;
-      background:#3b82f6;
-      border-radius:50%;
-      bottom:-60px;
-      right:-60px;
-      filter:blur(80px);
-      opacity:0.6;
-    }
-
-    .card{
-      width:100%;
-      max-width:360px;
-
-      background:rgba(255,255,255,0.12);
-
-      backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
-
-      border:1px solid rgba(255,255,255,0.2);
-
-      border-radius:30px;
-
-      padding:24px;
-
-      box-shadow:
-      0 8px 32px rgba(0,0,0,0.2);
-
-      position:relative;
-      z-index:2;
-
-      color:white;
-    }
-
-    .toggle{
-      position:absolute;
-      top:18px;
-      right:18px;
-
-      background:rgba(255,255,255,0.12);
-
-      border:1px solid rgba(255,255,255,0.25);
-
-      color:white;
-
-      padding:8px 15px;
-
-      border-radius:30px;
-
-      cursor:pointer;
-      font-size:14px;
-      font-weight:bold;
-    }
-
-    .toggle:hover{
-      transform:scale(1.05);
-    }
-
-    .logo{
-      width:90px;
-      height:90px;
-
-      border-radius:50%;
-      object-fit:cover;
-
-      display:block;
-      margin:auto;
-      margin-top:35px;
-
-      border:3px solid rgba(255,255,255,0.4);
-
-      box-shadow:0 0 20px rgba(255,255,255,0.3);
-    }
-
-    .title{
-      text-align:center;
-      font-size:40px;
-      font-weight:800;
-      margin-top:15px;
-      letter-spacing:2px;
-    }
-
-    .sub{
-      text-align:center;
-      font-size:14px;
-      opacity:0.8;
-      margin-top:5px;
-    }
-
-    hr{
-      border:none;
-      height:1px;
-      background:rgba(255,255,255,0.15);
-      margin:25px 0;
-    }
-
-    .label{
-      display:flex;
-      align-items:center;
-      gap:10px;
-
-      font-size:15px;
-      font-weight:bold;
-
-      margin-bottom:10px;
-    }
-
-    .input{
-      width:100%;
-
-      background:rgba(255,255,255,0.12);
-
-      border:1px solid rgba(255,255,255,0.18);
-
-      outline:none;
-
-      padding:14px;
-
-      border-radius:18px;
-
-      color:white;
-      font-size:15px;
-    }
-
-    .input::placeholder{
-      color:#ddd;
-    }
-
-    .fork{
-      margin-top:14px;
-      display:flex;
-      align-items:center;
-      gap:8px;
-
-      font-size:13px;
-      opacity:0.9;
-    }
-
-    .fork span{
-      color:#fff;
-      font-weight:bold;
-    }
-
-    .small-btn{
-      width:100%;
-      margin-top:15px;
-
-      background:rgba(255,255,255,0.15);
-
-      border:1px solid rgba(255,255,255,0.2);
-
-      color:white;
-
-      padding:12px;
-
-      border-radius:18px;
-
-      font-weight:bold;
-      cursor:pointer;
-    }
-
-    .small-btn:hover{
-      transform:translateY(-2px);
-    }
-
-    .main-btn{
-      width:100%;
-      margin-top:18px;
-
-      padding:16px;
-
-      border-radius:40px;
-
-      border:none;
-
-      background:white;
-      color:#6d28d9;
-
-      font-size:16px;
-      font-weight:800;
-
-      cursor:pointer;
-    }
-
-    .main-btn:hover{
-      transform:scale(1.03);
-      box-shadow:0 0 20px rgba(255,255,255,0.3);
-    }
-
-    .github-box{
-      margin-top:28px;
-
-      background:rgba(255,255,255,0.10);
-
-      border:1px solid rgba(255,255,255,0.18);
-
-      border-radius:22px;
-
-      padding:12px;
-
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .github-link{
-      flex:1;
-
-      background:rgba(255,255,255,0.12);
-
-      border-radius:20px;
-
-      padding:10px 14px;
-
-      overflow:hidden;
-      white-space:nowrap;
-      text-overflow:ellipsis;
-    }
-
-    .github-link a{
-      color:white;
-      text-decoration:none;
-      font-size:13px;
-      font-weight:bold;
-    }
-
-    .github-link a:hover{
-      text-decoration:underline;
-    }
-
-    .footer{
-      text-align:center;
-      margin-top:18px;
-      font-size:12px;
-      opacity:0.7;
-    }
-  </style>
-</head>
-<body>
-
-<div class="blur1"></div>
-<div class="blur2"></div>
-
-<div class="card">
-
-  <button class="toggle" onclick="toggleDark()">
-    <i class="fas fa-moon"></i> dark
-  </button>
-
-  <img
-    src="https://files.catbox.moe/1l02sd.png"
-    class="logo"
-  >
-
-  <div class="title">LUKA</div>
-
-  <div class="sub">
-    verify • deploy • heroku ☁️
-  </div>
-
-  <hr>
-
-  <div class="label">
-    <i class="fab fa-github"></i>
-    GITHUB USERNAME
-  </div>
-
-  <input
-    type="text"
-    class="input"
-    placeholder="e.g. lucvoice"
-    id="username"
-  >
-
-  <div class="fork">
-    <i class="fas fa-code-branch"></i>
-    must fork
-    <span>lucvoice/LUKA-AI</span>
-  </div>
-
-  <button class="small-btn">
-    deploy via Heroku
-  </button>
-
-  <button class="main-btn" onclick="deploy()">
-    🚀 VERIFY & DEPLOY
-  </button>
-
-  <div class="github-box">
-
-    <i class="fab fa-github fa-lg"></i>
-
-    <div class="github-link">
-      <a href="https://github.com/lucvoice/LUKA-AI"
-      target="_blank">
-      github.com/lucvoice/LUKA-AI
-      </a>
-    </div>
-
-    <i class="fas fa-arrow-right"></i>
-
-  </div>
-
-  <hr>
-
-  <div class="footer">
-    🛡️ glassmorphism • purple ui
-  </div>
-
-</div>
-
-<script>
-
-function toggleDark(){
-
-  document.body.classList.toggle("dark");
-
-  if(document.body.classList.contains("dark")){
-    localStorage.setItem("theme","dark");
-  } else {
-    localStorage.setItem("theme","light");
-  }
+<style>
+
+body{
+  background:#ffffff;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
 }
 
-if(localStorage.getItem("theme")==="dark"){
-  document.body.classList.add("dark");
+/* DARK MODE */
+
+body.dark{
+  background:#0f172a;
 }
 
-function deploy(){
+/* CARD */
 
-  let user =
-  document.getElementById("username").value;
+.card{
+  width:100%;
+  max-width:360px;
+  background:white;
+  border-radius:30px;
+  padding:22px;
+  position:relative;
 
-  if(user===""){
-    alert("Enter GitHub username");
-    return;
-  }
+  border:1px solid #ede9fe;
 
-  window.open(
-  "https://heroku.com/deploy?template=https://github.com/lucvoice/LUKA-AI",
-  "_blank");
-
+  box-shadow:
+  0 10px 30px rgba(139,92,246,0.12);
 }
 
-</script>
+/* DARK CARD */
 
-</body>
-</html>
+body.dark .card{
+  background:#111827;
+  color:white;
+  border:1px solid #312e81;
+}
+
+/* TOGGLE */
+
+.toggle{
+  position:absolute;
+  top:20px;
+  right:20px;
+
+  border:2px solid #8b5cf6;
+  color:#8b5cf6;
+
+  background:white;
+
+  padding:8px 16px;
+  border-radius:30px;
+
+  font-weight:bold;
+  cursor:pointer;
+}
+
+body.dark .toggle{
+  background:#111827;
+}
+
+/* LOGO */
+
+.logo{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  display:block;
+  margin:auto;
+  margin-top:40px;
+
+  border:4px solid #8b5cf6;
+
+  object-fit:cover;
+
+  box-shadow:
+  0 0 25px rgba(139,92,246,0.35);
+}
+
+/* TITLE */
+
+.title{
+  text-align:center;
+  font-size:42px;
+  font-weight:800;
+  margin-top:15px;
+
+  color:#6d28d9;
+}
+
+body.dark .title{
+  color:white;
+}
+
+/* SUBTITLE */
+
+.sub{
+  text-align:center;
+  color:#6b7280;
+  font-size:16px;
+}
+
+body.dark .sub{
+  color:#9ca3af;
+}
+
+/* LINE */
+
+hr{
+  margin:25px 0;
+  border:none;
+  height:1px;
+
+  background:#ede9fe;
+}
+
+body.dark hr{
+  background:#312e81;
+}
+
+/* LABEL */
+
+.label{
+  font-size:16px;
+  font-weight:bold;
+  margin-bottom:10px;
+
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  color:#6d28d9;
+}
+
+body.dark .label{
+  color:white;
+}
+
+/* INPUT */
+
+.input{
+  width:100%;
+  border:none;
+  outline:none;
+
+  background:#f5f3ff;
+
+  padding:14px;
+  border-radius:18px;
+
+  font-size:15px;
+
+  color:#111827;
+}
+
+.input:focus{
+  box-shadow:
+  0 0 0 3px rgba(139,92,246,0.2);
+}
+
+body.dark .input{
+  background:#1f2937;
+  color:white;
+}
+
+/* FORK */
+
+.fork{
+  margin-top:15px;
+  font-size:14px;
+  color:#6b7280;
+
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.fork span{
+  color:#8b5cf6;
+  font-weight:bold;
+}
+
+/* MAIN BUTTON */
+
+.main-btn{
+  width:100%;
+  margin-top:20px;
+
+  padding:16px;
+
+  border-radius:40px;
+
+  border:none;
+
+  background:#8b5cf6;
+  color:white;
+
+  font-size:17px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  box-shadow:
+  0 10px 25px rgba(139,92,246,0.3);
+}
+
+.main-btn:hover{
+  transform:translateY(-2px);
+
+  background:#7c3aed;
+}
+
+/* GITHUB BOX */
+
+.github-box{
+  margin-top:30px;
+
+  background:#f5f3ff;
+
+  border-radius:25px;
+  padding:14px;
+
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+body.dark .github-box{
+  background:#1f2937;
+}
+
+/* GITHUB LINK */
+
+.github-link{
+  flex:1;
+
+  background:white;
+
+  padding:10px 15px;
+
+  border-radius:25px;
+
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+
+  font-size:14px;
+
+  border:1px solid #ede9fe;
+}
+
+body.dark .github-link{
+  background:#111827;
+  border:1px solid #312e81;
+}
+
+.github-link a{
+  color:#6d28d9;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+body.dark .github-link a{
+  color:white;
+}
+
+/* FOOTER */
+
+.footer{
+  text-align:center;
+  margin-top:20px;
+
+  font-size:13px;
+  color:#8b5cf6;
+}
+
+body.dark .footer{
+  color:#9ca3af;
+}
+
+</style>
