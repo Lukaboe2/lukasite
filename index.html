@@ -1,73 +1,130 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUKA-AI Deployer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body { background-color: #f0f4f8; font-family: sans-serif; }
-        .card { background: white; border-radius: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .btn-outline { border: 2px solid #10b981; color: #10b981; transition: 0.3s; }
-        .btn-outline:hover { background-color: #10b981; color: white; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LUKA-AI Deployment</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      transition: 0.3s ease;
+    }
+
+    .card {
+      border-radius: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      transition: 0.3s ease;
+    }
+
+    .dark {
+      background: #0f172a;
+      color: white;
+    }
+
+    .dark .card {
+      background: #111827;
+    }
+
+    .input-field {
+      border-radius: 1rem;
+      transition: 0.3s;
+    }
+
+    .btn {
+      transition: 0.3s;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="card w-full max-w-md p-8">
-        <!-- Profile -->
-        <div class="flex flex-col items-center">
-            <div class="w-24 h-24 rounded-full border-4 border-green-500 mb-4 overflow-hidden">
-                <img src="https://via.placeholder.com/150" alt="LUKA-AI">
-            </div>
-            <h1 class="text-3xl font-bold text-slate-800">LUKA-AI</h1>
-            <p class="text-slate-500 text-sm mt-1">
-                <i class="fas fa-check-circle text-green-500"></i> verify · deploy · heroku
-            </p>
-        </div>
+<body id="body" class="flex items-center justify-center min-h-screen p-4 bg-slate-100">
 
-        <!-- Input -->
-        <div class="mt-8 space-y-4">
-            <div>
-                <label class="block text-xs font-bold text-slate-600 mb-2">GITHUB USERNAME</label>
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400">
-                        <i class="fas fa-user"></i>
-                    </span>
-                    <input type="text" id="githubRepo" placeholder="Ingiza jina lako la GitHub" 
-                           class="w-full pl-10 pr-4 py-4 bg-slate-50 border border-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500">
-                </div>
-            </div>
+  <div class="card w-full max-w-md p-8 bg-white relative">
 
-            <!-- Action Button -->
-            <button onclick="deployNow()" class="btn-outline w-full py-4 rounded-full font-bold flex items-center justify-center space-x-2 text-lg">
-                <i class="fas fa-rocket"></i>
-                <span>VERIFY & DEPLOY TO HEROKU</span>
-            </button>
-        </div>
+    <!-- Dark Mode Toggle -->
+    <button onclick="toggleDark()" 
+      class="absolute top-6 right-6 bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm border border-green-200">
+      <i class="fas fa-moon"></i> Theme
+    </button>
 
-        <div class="mt-6 text-center">
-            <p class="text-xs text-slate-400 italic">Hakikisha ume-fork repository ya LUKA-AI kwanza.</p>
-        </div>
+    <!-- Header -->
+    <div class="text-center mt-4">
+      <div class="w-24 h-24 mx-auto rounded-full border-4 border-green-500 p-1 mb-4">
+        <img src="https://via.placeholder.com/150" class="rounded-full w-full h-full object-cover"/>
+      </div>
+
+      <h1 class="text-3xl font-bold">LUKA-AI</h1>
+      <p class="text-sm text-gray-500 mt-1">
+        <i class="fas fa-cloud-upload-alt text-green-500"></i>
+        Deploy • Verify • Automate
+      </p>
     </div>
 
-    <script>
-        function deployNow() {
-            const repoName = document.getElementById('githubRepo').value.trim();
-            
-            if (repoName === "") {
-                alert("Tafadhali ingiza jina lako la GitHub kwanza!");
-                return;
-            }
+    <!-- Form -->
+    <div class="mt-8">
 
-            // Hii ndiyo link inayofanya kazi ya ku-deploy Heroku
-            // Badilisha 'LUKA-AI' hapa chini iwe jina halisi la folder la bot kwenye GitHub
-            const herokuUrl = `https://dashboard.heroku.com/new?template=https://github.com/${repoName}/LUKA-AI`;
-            
-            // Inafungua tab mpya ya ku-deploy
-            window.open(herokuUrl, '_blank');
-        }
-    </script>
+      <label class="text-xs font-bold uppercase text-gray-500">
+        GitHub Username
+      </label>
+
+      <div class="relative mt-2">
+        <i class="fas fa-user absolute left-3 top-4 text-gray-400"></i>
+        <input id="github"
+          type="text"
+          placeholder="e.g. octocat"
+          class="input-field w-full pl-10 pr-4 py-3 border focus:outline-none focus:ring-2 focus:ring-green-500"/>
+      </div>
+
+      <p class="text-xs text-gray-400 mt-2">
+        Must fork: <span class="text-green-600 font-semibold">LUKA-AI repo</span>
+      </p>
+
+      <!-- Deploy Button -->
+      <button id="deployBtn" disabled
+        class="btn w-full mt-6 py-3 rounded-full bg-green-500 text-white font-bold">
+        🚀 VERIFY & DEPLOY
+      </button>
+
+      <!-- Link -->
+      <div class="mt-6 flex items-center justify-between bg-slate-50 p-3 rounded-full border">
+        <span class="text-sm text-gray-600">github.com/LUKA-AI</span>
+        <i class="fab fa-github text-xl"></i>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <p class="text-center text-xs text-gray-400 mt-6">
+      Secure deployment system
+    </p>
+
+  </div>
+
+<script>
+  const body = document.getElementById("body");
+  const input = document.getElementById("github");
+  const btn = document.getElementById("deployBtn");
+
+  function toggleDark() {
+    body.classList.toggle("dark");
+  }
+
+  input.addEventListener("input", () => {
+    btn.disabled = input.value.trim() === "";
+  });
+
+  btn.addEventListener("click", () => {
+    alert("Deploying LUKA-AI for: " + input.value);
+  });
+</script>
+
 </body>
 </html>
