@@ -3,38 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LUKA-AI | DEPLOY SITE</title>
+  <title>LUKA-AI | CYBER DEPLOY</title>
 
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       height: 100vh;
+      font-family: monospace;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at top, #3b0764, #0a0a12);
-      color: white;
+      background: radial-gradient(circle at top, #120018, #05010a);
       overflow: hidden;
+      color: #fff;
     }
 
-    /* glowing background */
-    .glow {
+    /* cyber grid */
+    body::before {
+      content: "";
       position: absolute;
-      width: 400px;
-      height: 400px;
-      background: rgba(168,85,247,0.3);
-      filter: blur(120px);
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(rgba(187,0,255,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(187,0,255,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: moveGrid 10s linear infinite;
+      opacity: 0.4;
+    }
+
+    @keyframes moveGrid {
+      from { transform: translate(0,0); }
+      to { transform: translate(50px,50px); }
+    }
+
+    /* glow orbs */
+    .orb {
+      position: absolute;
+      width: 300px;
+      height: 300px;
       border-radius: 50%;
+      filter: blur(120px);
+      background: #bb00ff;
       top: 10%;
       left: 10%;
       animation: float 6s infinite ease-in-out;
     }
 
-    .glow2 {
+    .orb2 {
+      background: #6a00ff;
       top: 60%;
       left: 60%;
-      background: rgba(99,102,241,0.3);
+      animation-delay: 2s;
     }
 
     @keyframes float {
@@ -46,33 +66,47 @@
     .card {
       position: relative;
       z-index: 10;
-      width: 360px;
+      width: 380px;
       padding: 30px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(15px);
-      box-shadow: 0 0 25px rgba(168,85,247,0.4);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(187,0,255,0.3);
+      box-shadow: 0 0 40px rgba(187,0,255,0.25);
       text-align: center;
     }
 
-    h1 {
-      margin: 0;
+    .title {
       font-size: 28px;
-      color: #bb00ff;
+      font-weight: bold;
+      background: linear-gradient(90deg, #bb00ff, #6a00ff, #ff00ff);
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px #bb00ff;
     }
 
-    p {
-      font-size: 12px;
+    .tag {
+      font-size: 11px;
       color: #c9b3e6;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
     }
 
     input {
       width: 100%;
       padding: 12px;
-      margin-top: 20px;
       border-radius: 10px;
-      border: none;
+      border: 1px solid rgba(187,0,255,0.3);
+      background: rgba(0,0,0,0.4);
+      color: white;
       outline: none;
+      margin-top: 10px;
+    }
+
+    input:focus {
+      border-color: #bb00ff;
+      box-shadow: 0 0 10px #bb00ff;
     }
 
     button {
@@ -81,53 +115,63 @@
       padding: 12px;
       border: none;
       border-radius: 10px;
-      background: linear-gradient(90deg, #bb00ff, #6a00ff);
-      color: white;
       font-weight: bold;
       cursor: pointer;
+      color: white;
+      background: linear-gradient(90deg, #bb00ff, #6a00ff);
       transition: 0.3s;
+      box-shadow: 0 0 15px #bb00ff;
     }
 
     button:hover {
       transform: scale(1.05);
+      box-shadow: 0 0 30px #bb00ff;
     }
 
     a {
       display: block;
       margin-top: 15px;
+      font-size: 11px;
       color: #c9b3e6;
-      font-size: 12px;
       text-decoration: none;
     }
 
     .footer {
-      margin-top: 20px;
+      margin-top: 18px;
       font-size: 10px;
       opacity: 0.6;
+    }
+
+    .status {
+      font-size: 10px;
+      margin-top: 10px;
+      color: #bb00ff;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="glow"></div>
-  <div class="glow glow2"></div>
+  <div class="orb"></div>
+  <div class="orb orb2"></div>
 
   <div class="card">
 
-    <h1>LUKA-AI</h1>
-    <p>Deploy • Automate • Heroku System</p>
+    <div class="title">LUKA-AI</div>
+    <div class="tag">CYBER DEPLOY SYSTEM // v3.0</div>
 
-    <input id="github" type="text" placeholder="Enter GitHub username">
+    <input id="github" type="text" placeholder="GITHUB USERNAME">
 
-    <button onclick="deploy()">🚀 Deploy Now</button>
+    <button onclick="deploy()">⚡ INITIATE DEPLOY</button>
 
     <a href="https://github.com/lucvoice/LUKA-AI" target="_blank">
-      View GitHub Repository
+      ACCESS REPOSITORY →
     </a>
 
+    <div class="status">SYSTEM: ONLINE ⚡ READY</div>
+
     <div class="footer">
-      © 2026 LUKA-AI SYSTEM
+      © 2026 LUKA-AI CYBER CORE
     </div>
 
   </div>
@@ -137,12 +181,11 @@
       const user = document.getElementById("github").value.trim();
 
       if (!user) {
-        alert("Please enter GitHub username");
+        alert("ENTER USERNAME");
         return;
       }
 
       const url = `https://heroku.com/deploy?template=https://github.com/${user}/LUKA-AI`;
-
       window.open(url, "_blank");
     }
   </script>
