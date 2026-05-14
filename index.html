@@ -1,98 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUKA-AI Deployer</title>
-    <!-- Tailwind CSS Link via cdnjs -->
-    <script src="cloudflare.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LUKA-AI Deployer</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-purple-50 flex items-center justify-center min-h-screen p-4">
 
-    <!-- Main Card -->
-    <div class="bg-white rounded-3xl shadow-2xl p-6 w-full max-w-md border border-purple-100 relative text-center">
-        
-        <!-- Dark Mode Button -->
-        <button class="absolute top-4 right-4 bg-purple-50 text-purple-600 text-xs px-3 py-1.5 rounded-full border border-purple-200 flex items-center gap-1 font-medium hover:bg-purple-100 transition">
-            🎨 dark mode
-        </button>
+<body class="bg-purple-50 flex items-center justify-center min-h-screen p-4 transition-all duration-300" id="body">
 
-        <!-- Profile Avatar (LUKA-AI Branding) -->
-        <div class="flex justify-center mt-6">
-            <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-purple-600 shadow-md flex items-center justify-center bg-gradient-to-tr from-purple-900 to-indigo-700 text-white font-black text-2xl tracking-wider">
-                LUKA
-            </div>
-        </div>
+  <!-- Card -->
+  <div class="bg-white rounded-3xl shadow-2xl p-6 w-full max-w-md border border-purple-100 relative text-center">
 
-        <!-- Name and Status -->
-        <h1 class="text-2xl font-bold text-slate-800 mt-4">LUKA-AI</h1>
-        <p class="text-xs text-purple-600 font-medium mt-1 flex items-center justify-center gap-1">
-            ✓ verify · deploy · heroku ☁
-        </p>
+    <!-- Dark Mode Button -->
+    <button onclick="toggleDarkMode()" class="absolute top-4 right-4 bg-purple-50 text-purple-600 text-xs px-3 py-1.5 rounded-full border border-purple-200 hover:bg-purple-100 transition">
+      🎨 Dark Mode
+    </button>
 
-        <!-- Form Section -->
-        <div class="mt-6 text-left">
-            <label class="text-xs font-bold text-slate-600 tracking-wider block mb-2">
-                🐱 GITHUB USERNAME
-            </label>
-            
-            <!-- Input Field -->
-            <div class="relative mb-3">
-                <input type="text" id="github-username" placeholder="e.g. octocat" class="w-full bg-slate-50 text-slate-700 text-sm rounded-xl pl-4 pr-4 py-3 border border-slate-200 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500">
-            </div>
-
-            <!-- Fork Requirement -->
-            <p class="text-xs text-purple-600 font-medium mb-4">
-                🌿 must fork <span class="text-gray-500 font-mono">lucvoice/LUKA-AI</span>
-            </p>
-        </div>
-
-        <!-- Upper Deploy Tag -->
-        <div class="flex justify-end mb-4">
-            <span class="text-[10px] bg-purple-50 text-purple-700 px-3 py-1 rounded-full font-medium border border-purple-100">
-                deploy via Heroku
-            </span>
-        </div>
-
-        <!-- Action Button -->
-        <button onclick="handleDeploy()" class="w-full bg-white text-purple-600 hover:bg-purple-50 border-2 border-purple-500 rounded-full py-3 font-bold text-sm tracking-wide transition duration-200 shadow-sm mb-4">
-            🚀 VERIFY & DEPLOY TO HEROKU
-        </button>
-
-        <!-- GitHub Repository Link -->
-        <a href="github.com" target="_blank" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 flex items-center justify-between text-sm text-gray-600 hover:bg-gray-100 transition">
-            <div class="flex items-center gap-2 font-mono text-xs">
-                <span>github.com</span>
-            </div>
-            <span class="text-slate-400">➜</span>
-        </a>
-
-        <!-- Footer Notes -->
-        <div class="mt-6 pt-4 border-t border-slate-100">
-            <p class="text-[10px] text-gray-400 font-medium">
-                🛡️ theme switch · purple success
-            </p>
-        </div>
-
+    <!-- Logo -->
+    <div class="flex justify-center mt-6">
+      <div class="w-24 h-24 rounded-full flex items-center justify-center bg-gradient-to-tr from-purple-900 to-indigo-700 text-white font-black text-2xl shadow-md">
+        LUKA
+      </div>
     </div>
 
-    <!-- JavaScript Linkage to Heroku -->
-    <script>
-        function handleDeploy() {
-            const username = document.getElementById('github-username').value.trim();
-            
-            if(!username) {
-                alert('Please enter your GitHub Username first!');
-                return;
-            }
-            
-            // Generates the Heroku template deployment URL dynamically
-            const herokuDeployUrl = `https://heroku.com/deploy?template=https://github.com/lucvoice/LUKA-AI`;
-            
-            // Opens the Heroku deployment screen in a new window
-            window.open(herokuDeployUrl, '_blank');
-        }
-    </script>
+    <h1 class="text-2xl font-bold text-slate-800 mt-4">LUKA-AI</h1>
+    <p class="text-xs text-purple-600 font-medium mt-1">✓ verify · deploy · heroku ☁</p>
+
+    <!-- Form -->
+    <div class="mt-6 text-left">
+      <label class="text-xs font-bold text-slate-600 block mb-2">
+        🐱 GitHub Username
+      </label>
+
+      <input
+        type="text"
+        id="github-username"
+        placeholder="e.g. octocat"
+        class="w-full bg-slate-50 text-slate-700 text-sm rounded-xl px-4 py-3 border border-slate-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none"
+      />
+
+      <p class="text-xs text-purple-600 mt-3">
+        🌿 Must fork <span class="font-mono text-gray-500">lucvoice/LUKA-AI</span>
+      </p>
+    </div>
+
+    <!-- Deploy Button -->
+    <button
+      onclick="handleDeploy()"
+      class="w-full mt-6 bg-white text-purple-600 border-2 border-purple-500 rounded-full py-3 font-bold hover:bg-purple-50 transition"
+    >
+      🚀 VERIFY & DEPLOY TO HEROKU
+    </button>
+
+    <!-- GitHub Link -->
+    <a
+      href="https://github.com/lucvoice/LUKA-AI"
+      target="_blank"
+      class="mt-4 flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm text-gray-600 hover:bg-gray-100 transition"
+    >
+      <span class="font-mono text-xs">GitHub Repo</span>
+      <span>➜</span>
+    </a>
+
+    <p class="text-[10px] text-gray-400 mt-6 border-t pt-3">
+      🛡️ LUKA-AI Deploy System
+    </p>
+
+  </div>
+
+  <!-- JS -->
+  <script>
+    function handleDeploy() {
+      const username = document.getElementById("github-username").value.trim();
+
+      if (!username) {
+        alert("Please enter your GitHub username!");
+        return;
+      }
+
+      const url = `https://heroku.com/deploy?template=https://github.com/${username}/LUKA-AI`;
+      window.open(url, "_blank");
+    }
+
+    function toggleDarkMode() {
+      const body = document.getElementById("body");
+
+      if (body.classList.contains("bg-purple-50")) {
+        body.classList.remove("bg-purple-50");
+        body.classList.add("bg-slate-900");
+      } else {
+        body.classList.remove("bg-slate-900");
+        body.classList.add("bg-purple-50");
+      }
+    }
+  </script>
 
 </body>
 </html>
