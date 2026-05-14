@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LUKA-AI | CYBER DEPLOY</title>
+  <title>LUKA-AI | CYBER GITHUB DASHBOARD</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -49,56 +49,68 @@
 
 <body class="flex items-center justify-center min-h-screen p-4 text-white relative">
 
-  <!-- GRID -->
   <div class="grid-bg"></div>
 
-  <!-- CARD -->
+  <!-- MAIN CARD -->
   <div class="glass glow relative z-10 rounded-3xl p-6 w-full max-w-md text-center">
 
-    <!-- HEADER -->
-    <h1 class="font-bold text-lg neon-text">LUKA-AI CYBER SYSTEM</h1>
+    <!-- TITLE -->
+    <h1 class="font-bold text-lg neon-text">LUKA-AI CYBER DASHBOARD</h1>
+    <p class="text-xs text-purple-200 mt-1">GitHub + Deploy + Live Log System</p>
 
-    <!-- LOGO IMAGE -->
-    <div class="flex justify-center mt-4">
-      <img src="https://files.catbox.moe/1l02sd.png" class="avatar" />
-    </div>
+    <!-- GITHUB SECTION -->
+    <div class="mt-5 text-left p-3 rounded-xl bg-white/5 border border-white/10">
 
-    <p class="text-xs text-purple-200 mt-2">✓ verify · deploy · log system</p>
-
-    <!-- INPUT -->
-    <div class="text-left mt-6">
-      <label class="text-xs text-purple-300">GitHub Username</label>
+      <p class="text-xs text-purple-300 mb-2">🧑 GITHUB PROFILE</p>
 
       <input
         type="text"
         id="github-username"
-        placeholder="e.g. octocat"
-        class="w-full mt-2 px-4 py-3 rounded-xl bg-white/10 border border-white/10 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+        placeholder="Enter GitHub username"
+        class="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/10 text-white text-sm focus:ring-2 focus:ring-purple-500"
       />
+
+      <button
+        onclick="loadGitHub()"
+        class="w-full mt-3 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 transition"
+      >
+        🔍 Load GitHub Profile
+      </button>
+
+      <!-- PROFILE DISPLAY -->
+      <div id="profile" class="mt-4 text-xs text-purple-200"></div>
+
     </div>
 
-    <!-- BUTTON -->
-    <button
-      onclick="handleDeploy()"
-      class="w-full mt-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-500 font-bold hover:scale-105 transition glow"
-    >
-      🚀 VERIFY & DEPLOY
-    </button>
+    <!-- IMAGE LOG -->
+    <div class="mt-4 flex justify-center">
+      <img src="https://files.catbox.moe/1l02sd.png" class="avatar" />
+    </div>
 
     <!-- LOG PANEL -->
     <div class="mt-5 p-3 rounded-xl bg-white/5 border border-white/10 text-left">
       <p class="text-xs text-purple-300 mb-2">📡 SYSTEM LOG</p>
-
       <div id="log" class="text-xs text-purple-200 space-y-1">
-        <div>🟣 System ready...</div>
-        <div>⚡ Waiting for input...</div>
+        <div>🟣 System initialized...</div>
       </div>
     </div>
 
-    <!-- FOOTER -->
-    <p class="text-[10px] text-purple-300 mt-6 border-t border-white/10 pt-3">
-      🛡️ CYBER LUKA-AI ACTIVE
-    </p>
+    <!-- DEPLOY -->
+    <button
+      onclick="deploy()"
+      class="w-full mt-5 py-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-500 font-bold hover:scale-105 transition glow"
+    >
+      🚀 VERIFY & DEPLOY
+    </button>
+
+    <!-- GITHUB LINK -->
+    <a
+      href="https://github.com/lucvoice/LUKA-AI"
+      target="_blank"
+      class="block mt-4 text-xs text-purple-200 hover:text-white"
+    >
+      🔗 Open Main Repository
+    </a>
 
   </div>
 
@@ -110,32 +122,55 @@
       log.appendChild(item);
     }
 
-    function handleDeploy() {
-      const username = document.getElementById("github-username").value.trim();
+    async function loadGitHub() {
+      const user = document.getElementById("github-username").value.trim();
+      const profile = document.getElementById("profile");
 
-      if (!username) {
-        addLog("❌ No username entered");
-        alert("Please enter GitHub username");
+      if (!user) {
+        addLog("❌ No GitHub username");
         return;
       }
 
-      addLog("📡 Scanning GitHub profile...");
-      addLog("🖼️ Loading system avatar...");
+      addLog("📡 Fetching GitHub data...");
 
-      // SHOW IMAGE LOG ENTRY
-      const imgLog = document.createElement("div");
-      imgLog.innerHTML = `
-        <div style="margin-top:8px;">
-          <img src="https://files.catbox.moe/1l02sd.png" width="80" style="border-radius:10px; border:1px solid #a855f7; box-shadow:0 0 10px #a855f7;" />
-          <div>🔮 LUKA-AI Core Image Loaded</div>
-        </div>
-      `;
-      document.getElementById("log").appendChild(imgLog);
+      try {
+        const res = await fetch(`https://api.github.com/users/${user}`);
+        const data = await res.json();
 
-      const url = `https://heroku.com/deploy?template=https://github.com/${username}/LUKA-AI`;
+        if (data.message === "Not Found") {
+          profile.innerHTML = "❌ User not found";
+          addLog("❌ GitHub user not found");
+          return;
+        }
+
+        profile.innerHTML = `
+          👤 Name: ${data.name || "No name"}<br>
+          🔗 Username: ${data.login}<br>
+          📦 Repos: ${data.public_repos}<br>
+          ⭐ Followers: ${data.followers}<br>
+          📍 Location: ${data.location || "Unknown"}<br>
+          🔥 <a href="${data.html_url}" target="_blank" style="color:#a855f7;">Open Profile</a>
+        `;
+
+        addLog("✅ GitHub profile loaded");
+
+      } catch (err) {
+        addLog("⚠️ Error loading GitHub data");
+      }
+    }
+
+    function deploy() {
+      const user = document.getElementById("github-username").value.trim();
+
+      if (!user) {
+        addLog("❌ Enter username first");
+        return;
+      }
+
+      addLog("🚀 Opening deploy window...");
+
+      const url = `https://heroku.com/deploy?template=https://github.com/${user}/LUKA-AI`;
       window.open(url, "_blank");
-
-      addLog("🚀 Deploy window opened");
     }
   </script>
 
