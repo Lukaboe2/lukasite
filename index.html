@@ -36,36 +36,34 @@
       z-index: 0;
       opacity: 0.4;
     }
+
+    .avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid #a855f7;
+      box-shadow: 0 0 15px rgba(168,85,247,0.6);
+    }
   </style>
 </head>
 
 <body class="flex items-center justify-center min-h-screen p-4 text-white relative">
 
-  <!-- GRID BACKGROUND -->
+  <!-- GRID -->
   <div class="grid-bg"></div>
 
   <!-- CARD -->
   <div class="glass glow relative z-10 rounded-3xl p-6 w-full max-w-md text-center">
 
     <!-- HEADER -->
-    <div class="flex justify-between items-center mb-5">
-      <h1 class="font-bold text-lg neon-text">LUKA-AI</h1>
+    <h1 class="font-bold text-lg neon-text">LUKA-AI CYBER SYSTEM</h1>
 
-      <button onclick="toggleDarkMode()"
-        class="text-xs px-3 py-1 rounded-full bg-purple-600 hover:bg-purple-500 transition">
-        🎨 Mode
-      </button>
+    <!-- LOGO IMAGE -->
+    <div class="flex justify-center mt-4">
+      <img src="https://files.catbox.moe/1l02sd.png" class="avatar" />
     </div>
 
-    <!-- LOGO -->
-    <div class="flex justify-center mb-4">
-      <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-purple-700 to-indigo-500 flex items-center justify-center font-black text-2xl glow">
-        L
-      </div>
-    </div>
-
-    <h2 class="text-xl font-bold neon-text">LUKA-AI DEPLOYER</h2>
-    <p class="text-xs text-purple-200 mt-1">✓ verify · deploy · heroku system</p>
+    <p class="text-xs text-purple-200 mt-2">✓ verify · deploy · log system</p>
 
     <!-- INPUT -->
     <div class="text-left mt-6">
@@ -74,13 +72,9 @@
       <input
         type="text"
         id="github-username"
-        placeholder="e.g.Lucvoice"
+        placeholder="e.g. octocat"
         class="w-full mt-2 px-4 py-3 rounded-xl bg-white/10 border border-white/10 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
       />
-
-      <p class="text-xs text-purple-300 mt-2">
-        🌿 Must fork <span class="text-purple-200 font-mono">lucvoice/LUKA-AI</span>
-      </p>
     </div>
 
     <!-- BUTTON -->
@@ -91,37 +85,57 @@
       🚀 VERIFY & DEPLOY
     </button>
 
-    <!-- LINK -->
-    <a
-      href="https://github.com/lucvoice/LUKA-AI"
-      target="_blank"
-      class="block mt-4 text-xs text-purple-200 hover:text-white transition"
-    >
-      Open GitHub Repository →
-    </a>
+    <!-- LOG PANEL -->
+    <div class="mt-5 p-3 rounded-xl bg-white/5 border border-white/10 text-left">
+      <p class="text-xs text-purple-300 mb-2">📡 SYSTEM LOG</p>
+
+      <div id="log" class="text-xs text-purple-200 space-y-1">
+        <div>🟣 System ready...</div>
+        <div>⚡ Waiting for input...</div>
+      </div>
+    </div>
 
     <!-- FOOTER -->
     <p class="text-[10px] text-purple-300 mt-6 border-t border-white/10 pt-3">
-      🛡️ CYBER SYSTEM ACTIVE • LUKA-AI
+      🛡️ CYBER LUKA-AI ACTIVE
     </p>
 
   </div>
 
   <script>
+    function addLog(text) {
+      const log = document.getElementById("log");
+      const item = document.createElement("div");
+      item.textContent = text;
+      log.appendChild(item);
+    }
+
     function handleDeploy() {
       const username = document.getElementById("github-username").value.trim();
 
       if (!username) {
-        alert("Please enter your GitHub username!");
+        addLog("❌ No username entered");
+        alert("Please enter GitHub username");
         return;
       }
 
+      addLog("📡 Scanning GitHub profile...");
+      addLog("🖼️ Loading system avatar...");
+
+      // SHOW IMAGE LOG ENTRY
+      const imgLog = document.createElement("div");
+      imgLog.innerHTML = `
+        <div style="margin-top:8px;">
+          <img src="https://files.catbox.moe/1l02sd.png" width="80" style="border-radius:10px; border:1px solid #a855f7; box-shadow:0 0 10px #a855f7;" />
+          <div>🔮 LUKA-AI Core Image Loaded</div>
+        </div>
+      `;
+      document.getElementById("log").appendChild(imgLog);
+
       const url = `https://heroku.com/deploy?template=https://github.com/${username}/LUKA-AI`;
       window.open(url, "_blank");
-    }
 
-    function toggleDarkMode() {
-      alert("Cyber mode tayari iko active 😎");
+      addLog("🚀 Deploy window opened");
     }
   </script>
 
