@@ -24,6 +24,7 @@
       align-items:center;
       padding:20px;
       overflow:hidden;
+      transition:.4s;
       background:
       radial-gradient(circle at top left,#7c3aed,#0f172a 40%),
       linear-gradient(135deg,#111827,#020617);
@@ -61,18 +62,7 @@
       backdrop-filter:blur(18px);
       box-shadow:0 10px 40px rgba(0,0,0,.4);
       color:#fff;
-      animation:fadeIn .8s ease;
-    }
-
-    @keyframes fadeIn{
-      from{
-        opacity:0;
-        transform:translateY(20px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
+      transition:.4s;
     }
 
     .theme-btn{
@@ -240,6 +230,48 @@
       font-size:12px;
     }
 
+    /* LIGHT MODE */
+
+    body.light-mode{
+      background:#f3f4f6;
+    }
+
+    body.light-mode .card{
+      background:#ffffff;
+      color:#111827;
+      border:1px solid #d1d5db;
+    }
+
+    body.light-mode .subtitle,
+    body.light-mode .fork,
+    body.light-mode .footer{
+      color:#4b5563;
+    }
+
+    body.light-mode .label{
+      color:#111827;
+    }
+
+    body.light-mode .input{
+      background:#f9fafb;
+      color:#111827;
+      border:1px solid #d1d5db;
+    }
+
+    body.light-mode .repo-box{
+      background:#f9fafb;
+      border:1px solid #d1d5db;
+    }
+
+    body.light-mode .repo-link{
+      color:#111827;
+    }
+
+    body.light-mode .theme-btn{
+      background:#111827;
+      color:#fff;
+    }
+
     @media(max-width:500px){
 
       .card{
@@ -262,7 +294,7 @@
 
   <div class="card">
 
-    <button class="theme-btn">
+    <button class="theme-btn" onclick="toggleTheme()">
       🌙 Dark
     </button>
 
@@ -337,6 +369,25 @@
 
   <script>
 
+    function toggleTheme(){
+
+      document.body.classList.toggle("light-mode");
+
+      const themeBtn =
+      document.querySelector(".theme-btn");
+
+      if(document.body.classList.contains("light-mode")){
+
+        themeBtn.innerHTML = "☀️ Light";
+
+      }else{
+
+        themeBtn.innerHTML = "🌙 Dark";
+
+      }
+
+    }
+
     function handleDeploy(event){
 
       event.preventDefault();
@@ -353,6 +404,7 @@
       "https://heroku.com/deploy?template=https://github.com/lucvoice/LUKA-AI";
 
       window.open(deployUrl, "_blank");
+
     }
 
     function openRepo(){
