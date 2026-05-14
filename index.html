@@ -1,114 +1,228 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LUKA-AI Deployment</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-
-  <style>
-    body {
-      font-family: sans-serif;
-      transition: 0.3s;
-    }
-
-    .dark {
-      background: #0f172a;
-      color: white;
-    }
-
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      transition: 0.3s;
-    }
-
-    .dark .card {
-      background: #111827;
-      color: white;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      outline: none;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      border-radius: 30px;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 15px;
-      background: #22c55e;
-      color: white;
-    }
-
-    .btn:disabled {
-      background: gray;
-      cursor: not-allowed;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUKA-AI - Deploy to Heroku</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 450px;
+            padding: 30px 24px;
+            text-align: center;
+            position: relative;
+        }
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #eaf7ed;
+            color: #198754;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .avatar-container {
+            margin: 20px auto 15px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #198754;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111;
+        }
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .brand-name {
+            font-size: 26px;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 5px;
+        }
+        .status-links {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #6c757d;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .status-links span.dot {
+            color: #198754;
+        }
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .form-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #495057;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .input-wrapper {
+            position: relative;
+        }
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            font-size: 15px;
+            background-color: #f8f9fa;
+            color: #212529;
+            outline: none;
+        }
+        .fork-instruction {
+            font-size: 13px;
+            color: #6c757d;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .fork-link {
+            color: #dc3545;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .deploy-via {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .deploy-via-badge {
+            background-color: #eaf7ed;
+            color: #198754;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: inline-block;
+        }
+        .btn-deploy {
+            width: 100%;
+            background-color: #ffffff;
+            color: #198754;
+            border: 2px solid #198754;
+            padding: 14px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 25px;
+            transition: all 0.2s ease;
+        }
+        .btn-deploy:hover {
+            background-color: #198754;
+            color: #ffffff;
+        }
+        .github-repo-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #dee2e6;
+            border-radius: 30px;
+            padding: 12px 20px;
+            background-color: #ffffff;
+            margin-bottom: 25px;
+        }
+        .repo-url {
+            font-size: 14px;
+            color: #495057;
+            text-decoration: none;
+        }
+        .footer-text {
+            font-size: 12px;
+            color: #6c757d;
+        }
+    </style>
 </head>
+<body>
 
-<body id="body" class="flex items-center justify-center min-h-screen bg-slate-100">
+    <div class="card">
+        <button class="dark-mode-toggle">🎨 dark mode</button>
 
-  <div class="card w-full max-w-md">
+        <div class="avatar-container">
+            <!-- Unaweza kuweka link ya picha yako hapa kwenye src -->
+            <img src="placeholder.com" alt="LUKA-AI Logo">
+        </div>
 
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <h2>🚀 LUKA-AI</h2>
+        <div class="brand-name">LUKA-AI</div>
+        
+        <div class="status-links">
+            <span class="dot">●</span> verify · deploy · heroku ☁
+        </div>
 
-      <button onclick="toggleDark()" style="padding:6px 12px;border-radius:20px;border:1px solid #ccc;">
-        🌙 Theme
-      </button>
+        <form onsubmit="handleDeploy(event)">
+            <div class="form-group">
+                <label class="form-label">🐱 GitHub Username</label>
+                <div class="input-wrapper">
+                    <input type="text" id="username" placeholder="e.g. octocat" required>
+                </div>
+                <div class="fork-instruction">
+                    🌿 must fork <a href="github.com" target="_blank" class="fork-link">luka-ai/Luka</a>
+                </div>
+            </div>
+
+            <div class="deploy-via">
+                <span class="deploy-via-badge">deploy via Heroku</span>
+            </div>
+
+            <button type="submit" class="btn-deploy">🚀 Verify & Deploy to Heroku</button>
+        </form>
+
+        <div class="github-repo-box">
+            <a href="github.com" target="_blank" class="repo-url">github.com</a>
+            <span>➜</span>
+        </div>
+
+        <div class="footer-text">
+            🛡 theme switch · green success
+        </div>
     </div>
 
-    <p style="margin-top:10px;color:gray;">Deploy system</p>
-
-    <div style="margin-top:20px;">
-      <label>GitHub Username</label>
-      <input id="github" type="text" placeholder="octocat" />
-    </div>
-
-    <button id="deployBtn" class="btn" disabled>
-      🚀 VERIFY & DEPLOY
-    </button>
-
-    <p style="margin-top:15px;font-size:12px;color:gray;">
-      github.com/LUKA-AI
-    </p>
-
-  </div>
-
-<script>
-  const body = document.getElementById("body");
-  const input = document.getElementById("github");
-  const btn = document.getElementById("deployBtn");
-
-  function toggleDark() {
-    body.classList.toggle("dark");
-  }
-
-  input.addEventListener("input", () => {
-    if (input.value.trim().length > 0) {
-      btn.disabled = false;
-    } else {
-      btn.disabled = true;
-    }
-  });
-
-  btn.addEventListener("click", () => {
-    alert("Deploying LUKA-AI for: " + input.value);
-  });
-</script>
+    <script>
+        function handleDeploy(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            // Hapa itampeleka mtumiaji moja kwa moja Heroku akiwa na jina lake la GitHub
+            const herokuDeployUrl = `heroku.com{username}/Luka`;
+            window.open(herokuDeployUrl, '_blank');
+        }
+    </script>
 
 </body>
 </html>
