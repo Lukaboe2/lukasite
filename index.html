@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LUKA-AI • HEROKU DEPLOY</title>
+  <title>LUKA-AI • HEROKU</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -13,93 +13,84 @@
   <style>
     *{
       transition:0.3s;
-      font-family: sans-serif;
+      font-family:sans-serif;
     }
 
     body{
       background:#eef1f4;
       min-height:100vh;
       display:flex;
-      align-items:center;
       justify-content:center;
-      padding:20px;
+      align-items:center;
+      padding:15px;
+    }
+
+    body.dark{
+      background:#0f172a;
     }
 
     .card{
       width:100%;
-      max-width:420px;
+      max-width:360px;
       background:white;
-      border-radius:35px;
-      padding:30px;
-      box-shadow:0 15px 40px rgba(0,0,0,0.08);
+      border-radius:30px;
+      padding:22px;
+      box-shadow:0 10px 35px rgba(0,0,0,0.08);
       position:relative;
     }
 
-    .dark body{
-      background:#0f172a;
-    }
-
-    .dark .card{
+    body.dark .card{
       background:#111827;
       color:white;
     }
 
-    .toggle-btn{
+    .toggle{
       position:absolute;
-      top:25px;
-      right:25px;
+      top:20px;
+      right:20px;
       border:2px solid #8b5cf6;
       color:#8b5cf6;
-      padding:10px 20px;
+      background:none;
+      padding:8px 16px;
       border-radius:30px;
-      cursor:pointer;
       font-weight:bold;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      background:transparent;
+      cursor:pointer;
     }
 
     .logo{
-      width:120px;
-      height:120px;
+      width:90px;
+      height:90px;
       border-radius:50%;
-      object-fit:cover;
-      border:5px solid #8b5cf6;
       display:block;
       margin:auto;
       margin-top:40px;
+      border:4px solid #8b5cf6;
+      object-fit:cover;
     }
 
     .title{
       text-align:center;
-      margin-top:20px;
-      font-size:55px;
+      font-size:42px;
       font-weight:800;
-      color:#111827;
+      margin-top:15px;
     }
 
-    .dark .title{
-      color:white;
-    }
-
-    .subtitle{
+    .sub{
       text-align:center;
-      color:#6b7280;
-      margin-top:-10px;
-      font-size:20px;
+      color:gray;
+      font-size:16px;
     }
 
     hr{
-      margin:30px 0;
+      margin:25px 0;
       border:none;
       height:1px;
       background:#ddd;
     }
 
     .label{
-      font-weight:700;
-      font-size:20px;
+      font-size:16px;
+      font-weight:bold;
       margin-bottom:10px;
       display:flex;
       align-items:center;
@@ -109,26 +100,25 @@
     .input{
       width:100%;
       border:none;
-      background:#f3f4f6;
-      padding:18px;
-      border-radius:20px;
-      font-size:18px;
       outline:none;
-      margin-bottom:15px;
+      background:#f3f4f6;
+      padding:14px;
+      border-radius:18px;
+      font-size:15px;
     }
 
-    .dark .input{
+    body.dark .input{
       background:#1f2937;
       color:white;
     }
 
     .fork{
+      margin-top:15px;
+      font-size:14px;
+      color:gray;
       display:flex;
       align-items:center;
-      gap:10px;
-      color:#6b7280;
-      margin-bottom:20px;
-      font-size:17px;
+      gap:8px;
     }
 
     .fork span{
@@ -136,27 +126,27 @@
       font-weight:bold;
     }
 
-    .deploy-small{
+    .small-btn{
       width:100%;
+      margin-top:15px;
       border:none;
       background:#ede9fe;
       color:#6d28d9;
-      padding:14px;
+      padding:12px;
       border-radius:20px;
-      font-size:20px;
       font-weight:bold;
       cursor:pointer;
-      margin-bottom:25px;
     }
 
     .main-btn{
       width:100%;
-      padding:22px;
-      border-radius:50px;
-      border:3px solid #8b5cf6;
+      margin-top:18px;
+      padding:16px;
+      border-radius:40px;
+      border:2px solid #8b5cf6;
       background:white;
       color:#6d28d9;
-      font-size:24px;
+      font-size:18px;
       font-weight:800;
       cursor:pointer;
     }
@@ -166,132 +156,145 @@
       color:white;
     }
 
-    .dark .main-btn{
+    body.dark .main-btn{
       background:#111827;
     }
 
     .github-box{
-      margin-top:35px;
+      margin-top:30px;
       background:#f5f3ff;
-      border-radius:30px;
-      padding:18px;
+      border-radius:25px;
+      padding:14px;
       display:flex;
       align-items:center;
-      justify-content:space-between;
       gap:10px;
     }
 
-    .dark .github-box{
+    body.dark .github-box{
       background:#1f2937;
     }
 
     .github-link{
-      background:white;
-      padding:12px 18px;
-      border-radius:30px;
       flex:1;
+      background:white;
+      padding:10px 15px;
+      border-radius:25px;
       overflow:hidden;
-      text-overflow:ellipsis;
       white-space:nowrap;
+      text-overflow:ellipsis;
+      font-size:14px;
     }
 
-    .dark .github-link{
+    body.dark .github-link{
       background:#111827;
+    }
+
+    .github-link a{
+      color:#111827;
+      text-decoration:none;
+      font-weight:bold;
+    }
+
+    body.dark .github-link a{
+      color:white;
     }
 
     .footer{
       text-align:center;
-      margin-top:25px;
-      color:#9ca3af;
-      font-size:17px;
+      margin-top:20px;
+      font-size:13px;
+      color:gray;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
+<div class="card">
 
-    <button class="toggle-btn" onclick="toggleDark()">
-      <i class="fas fa-palette"></i>
-      dark mode
-    </button>
+  <button class="toggle" onclick="toggleDark()">
+    <i class="fas fa-palette"></i> dark
+  </button>
 
-    <img
-      src="https://files.catbox.moe/1l02sd.png"
-      class="logo"
-    />
+  <img src="https://i.imgur.com/8Km9tLL.jpg" class="logo">
 
-    <h1 class="title">LUKA</h1>
+  <div class="title">LUKA</div>
 
-    <p class="subtitle">
-      ✅ verify • deploy • heroku ☁️
-    </p>
+  <div class="sub">
+    ✅ verify • deploy • heroku ☁️
+  </div>
 
-    <hr>
+  <hr>
 
-    <div class="label">
-      <i class="fab fa-github"></i>
-      GITHUB USERNAME
+  <div class="label">
+    <i class="fab fa-github"></i>
+    GITHUB USERNAME
+  </div>
+
+  <input
+    type="text"
+    class="input"
+    placeholder="e.g. lucvoice"
+    id="username"
+  >
+
+  <div class="fork">
+    <i class="fas fa-code-branch"></i>
+    must fork
+    <span>lucvoice/LUKA-AI</span>
+  </div>
+
+  <button class="small-btn">
+    deploy via Heroku
+  </button>
+
+  <button class="main-btn" onclick="deploy()">
+    🚀 VERIFY & DEPLOY TO HEROKU
+  </button>
+
+  <div class="github-box">
+
+    <i class="fab fa-github fa-lg"></i>
+
+    <div class="github-link">
+      <a href="https://github.com/lucvoice/LUKA-AI"
+         target="_blank">
+         github.com/lucvoice/LUKA-AI
+      </a>
     </div>
 
-    <input
-      type="text"
-      class="input"
-      placeholder="e.g. lucvoice"
-      id="username"
-    />
-
-    <div class="fork">
-      <i class="fas fa-code-branch"></i>
-      must fork
-      <span>lucvoice/LUKA-AI</span>
-    </div>
-
-    <button class="deploy-small">
-      deploy via Heroku
-    </button>
-
-    <button class="main-btn" onclick="deploy()">
-      🚀 VERIFY & DEPLOY TO HEROKU
-    </button>
-
-    <div class="github-box">
-      <i class="fab fa-github fa-2x"></i>
-
-      <div class="github-link">
-        github.com/lucvoice/LUKA-AI
-      </div>
-
-      <i class="fas fa-arrow-right fa-2x"></i>
-    </div>
-
-    <hr>
-
-    <div class="footer">
-      🛡️ theme switch • purple success
-    </div>
+    <i class="fas fa-arrow-right"></i>
 
   </div>
 
-  <script>
-    function toggleDark(){
-      document.body.classList.toggle("dark");
+  <hr>
+
+  <div class="footer">
+    🛡️ theme switch • purple success
+  </div>
+
+</div>
+
+<script>
+  function toggleDark(){
+    document.body.classList.toggle("dark");
+  }
+
+  function deploy(){
+
+    let user =
+    document.getElementById("username").value;
+
+    if(user === ""){
+      alert("Enter GitHub username");
+      return;
     }
 
-    function deploy(){
-      let user = document.getElementById("username").value;
-
-      if(user === ""){
-        alert("Enter GitHub username");
-        return;
-      }
-
-      window.open(
-        "https://heroku.com/deploy?template=https://github.com/lucvoice/LUKA-AI",
-        "_blank"
-      );
-    }
-  </script>
+    window.open(
+      "https://heroku.com/deploy?template=https://github.com/lucvoice/LUKA-AI",
+      "_blank"
+    );
+  }
+</script>
 
 </body>
 </html>
