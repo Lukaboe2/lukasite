@@ -1,0 +1,17 @@
+{
+  "name": "LUKA-AI Deployer",
+  "description": "An automated system to deploy LUKA-AI via Heroku.",
+  "repository": "github.com",
+  "keywords": ["luka-ai", "bot", "deploy"],
+  "env": {
+    "SESSION_ID": {
+      "description": "Enter your LUKA-AI session ID here.",
+      "required": true
+    },
+    "OWNER_NUMBER": {
+      "description": "Enter your phone number with country code (e.g., 255...).",
+      "required": true
+    }
+  },
+  "stack": "container"
+}
